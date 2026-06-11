@@ -15,7 +15,10 @@ app.use(express.json());
 
 // Routes
 const authRoutes = require('./src/routes/authRoutes');
+const groupRoutes = require('./src/routes/groupRoutes');
+
 app.use('/api/auth', authRoutes);
+app.use('/api/groups', groupRoutes);
 
 // Test route
 app.get('/', (req, res) => {
