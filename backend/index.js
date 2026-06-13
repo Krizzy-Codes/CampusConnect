@@ -38,11 +38,13 @@ const authRoutes = require('./src/routes/authRoutes');
 const groupRoutes = require('./src/routes/groupRoutes');
 const expenseRoutes = require('./src/routes/expenseRoutes');
 const itemRoutes = require('./src/routes/itemRoutes');
+const noticeRoutes = require('./src/routes/noticeRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/items', itemRoutes);
+app.use('/api/notices', noticeRoutes);
 
 // Test route
 app.get('/', (req, res) => {
