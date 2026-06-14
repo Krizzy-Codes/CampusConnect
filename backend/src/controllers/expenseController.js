@@ -56,20 +56,24 @@ const getBalances = async (req, res) => {
   try {
     const { groupId } = req.params;
 
-    const expenses = await Expense.find({ group: groupId });
+    const expenses = await Expense.find({ group: groupId })
+      .populate('paidBy', 'name')
+      .populate('splitAmong.user', 'name');
 
     const balances = {};
 
     expenses.forEach(expense => {
-      const paidBy = expense.paidBy.toString();
+      const paidBy = expense.paidBy._id.toString();
+      const paidByName = expense.paidBy.name;
 
       expense.splitAmong.forEach(split => {
-        const owes = split.user.toString();
-        if (owes === paidBy) return;
+        const owesId = split.user._id.toString();
+        const owesName = split.user.name;
+        if (owesId === paidBy) return;
         if (!split.settled) {
-          if (!balances[owes]) balances[owes] = {};
-          if (!balances[owes][paidBy]) balances[owes][paidBy] = 0;
-          balances[owes][paidBy] += split.amount;
+          const key = `${owesName} owes ${paidByName}`;
+          if (!balances[key]) balances[key] = 0;
+          balances[key] += split.amount;
         }
       });
     });
@@ -87,9 +91,16 @@ const settleExpense = async (req, res) => {
     const { expenseId } = req.params;
 
     const expense = await Expense.findById(expenseId);
-    if (!expense) {
-      return res.status(404).json({ message: 'Expense not found' });
-    }
+
+    console.log("Logged user:", req.userId);
+
+    expense.splitAmong.forEach(split => {
+      console.log(
+        split.user.toString(),
+        req.userId,
+        split.user.toString() === req.userId
+      );
+    });
 
     expense.splitAmong = expense.splitAmong.map(split => {
       if (split.user.toString() === req.userId) {
@@ -99,10 +110,10 @@ const settleExpense = async (req, res) => {
     });
 
     await expense.save();
-    res.json({ message: 'Settled!', expense });
 
+    res.json({ message: "Settled!", expense });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 

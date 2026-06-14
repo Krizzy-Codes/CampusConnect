@@ -4,6 +4,10 @@ import { useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import LostFound from './pages/LostFound';
+import Notices from './pages/Notices';
+import Notes from './pages/Notes';
+import Expenses from './pages/Expenses';
 
 // Protected route
 const ProtectedRoute = ({ children }) => {
@@ -17,6 +21,21 @@ function App() {
     <BrowserRouter>
       <Toaster position="top-right" />
       <Routes>
+        <Route path="/lost-found" element={
+  <ProtectedRoute>
+    <LostFound />
+  </ProtectedRoute>
+} />
+<Route path="/notices" element={
+  <ProtectedRoute>
+    <Notices />
+  </ProtectedRoute>
+} />
+<Route path="/notes" element={
+  <ProtectedRoute>
+    <Notes />
+  </ProtectedRoute>
+} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={
@@ -24,6 +43,11 @@ function App() {
             <Dashboard />
           </ProtectedRoute>
         } />
+        <Route path="/expenses" element={
+  <ProtectedRoute>
+    <Expenses />
+  </ProtectedRoute>
+} />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
