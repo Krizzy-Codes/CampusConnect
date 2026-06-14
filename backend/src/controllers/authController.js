@@ -30,12 +30,31 @@ const register = async (req, res) => {
         email: user.email,
         college: user.college
       }
+      
     });
 
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+// Profile update karo
+const updateProfile = async (req, res) => {
+  try {
+    const { name, college, branch, semester, bio, profilePic } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      { name, college, branch, semester, bio, profilePic },
+      { new: true }
+    ).select('-password');
+
+    res.json({ message: 'Profile updated!', user });
+
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
 
 // Login
 const login = async (req, res) => {
@@ -74,4 +93,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+module.exports = { register, login, updateProfile };

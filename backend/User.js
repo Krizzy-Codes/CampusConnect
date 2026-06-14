@@ -26,7 +26,23 @@ const userSchema = new mongoose.Schema(
     hostel: {
       type: String,
       default: ''
-    }
+    },
+    branch: {
+  type: String,
+  default: ''
+},
+semester: {
+  type: Number,
+  default: 1
+},
+profilePic: {
+  type: String,
+  default: ''
+},
+bio: {
+  type: String,
+  default: ''
+}
   },
   {
     timestamps: true

@@ -29,6 +29,7 @@ app.set('io', io);
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Models
 require('./src/models/User');
@@ -40,6 +41,8 @@ const expenseRoutes = require('./src/routes/expenseRoutes');
 const itemRoutes = require('./src/routes/itemRoutes');
 const noticeRoutes = require('./src/routes/noticeRoutes');
 const noteRoutes = require('./src/routes/noteRoutes');
+const uploadRoutes = require('./src/routes/uploadRoutes');
+
 
 app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
@@ -47,6 +50,7 @@ app.use('/api/expenses', expenseRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/notices', noticeRoutes);
 app.use('/api/notes', noteRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Test route
 app.get('/', (req, res) => {

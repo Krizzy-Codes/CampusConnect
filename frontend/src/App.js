@@ -8,6 +8,7 @@ import LostFound from './pages/LostFound';
 import Notices from './pages/Notices';
 import Notes from './pages/Notes';
 import Expenses from './pages/Expenses';
+import Profile from './pages/Profile';
 
 // Protected route
 const ProtectedRoute = ({ children }) => {
@@ -43,6 +44,11 @@ function App() {
             <Dashboard />
           </ProtectedRoute>
         } />
+        <Route path="/profile" element={
+  <ProtectedRoute>
+    <Profile />
+  </ProtectedRoute>
+} />
         <Route path="/expenses" element={
   <ProtectedRoute>
     <Expenses />

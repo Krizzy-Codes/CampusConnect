@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { register, login } = require('../controllers/authController');
+
 const { protect } = require('../middleware/authMiddleware');
 const { registerValidation, loginValidation } = require('../middleware/validateMiddleware');
+const { register, login, updateProfile } = require('../controllers/authController');
 
 router.post('/register', registerValidation, register);
 router.post('/login', loginValidation, login);
+router.put('/update-profile', protect, updateProfile);
 
 router.get('/profile', protect, async (req, res) => {
   const User = require('../models/User');
