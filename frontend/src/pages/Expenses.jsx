@@ -13,7 +13,6 @@ const Expenses = () => {
   const [showExpenseForm, setShowExpenseForm] = useState(false);
   const [groupName, setGroupName] = useState('');
   const [expenseData, setExpenseData] = useState({ description: '', amount: '' });
-  const { } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
