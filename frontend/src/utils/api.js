@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://campusconnect-backend-1616.onrender.com',
+  baseURL: 'https://campusconnect-backend-1616.onrender.com/api',
 });
 
 // Har request mein token automatically add karo
